@@ -38,12 +38,25 @@ function color () {
     echo -e "\033[${!color}m${2}\033[m" ${3}
 }
 
-function help () {
+function usage () {
     local REVISION=unknown
     [ -d "$SUMIRE/.git" ] && local REF=$(sed "s/.*: //g" "$SUMIRE/.git/HEAD") && REVISION=$(cat "$SUMIRE/.git/$REF" 2>/dev/null)
-    echo "the sumire, revision $REVISION"
+    echo -e "SUMIRE - a helper for android builders"
+    echo -e "Rev: $REVISION\n"
     case $1 in
+        help)
+            color blue "Usage: $RUN help MODE"
+            echo -e "show help of given MODE, show generic help if no given or MODE not found." ;;
+        build)
+            color blue "Usage: $RUN build OPTIONS"
+            echo -e "OPTIONS: "
+            echo -e "\t-d: target device \033[32m(required)\033[m"
+            echo -e "\t-s: target directory \033[32m(required)\033[m" ;;
         *)
-            color green "Usage: add later" ;;
+            color blue "Usage: $RUN MODE ..."
+            echo -e "MODE:"
+            echo -e "\tbuild: run build."
+            echo -e "\thelp: show help."
+            echo -e "more information, please run '$RUN help MODE'." ;;
     esac
 }

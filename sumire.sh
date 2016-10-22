@@ -8,6 +8,7 @@
 ### https://github.com/droidfivex/sumire/blob/master/LICENSE
 
 # set paths
+readonly RUN=${0##*/}
 tmp=$(readlink -f $0)
 readonly SUMIRE=${tmp%/*}
 readonly WORK=$(pwd)
@@ -38,6 +39,6 @@ case $MODE in
         # kick-start build
         init || error "device tree is unprepared."
         build ;;
-    help) help $1 ;;
-    *) error "You must select right mode.\n    want help, run 'sumire help'." ;;
+    help) usage $1 ;;
+    *) error "You must select right mode.\n    You want help, run '$RUN help'." ;;
 esac
