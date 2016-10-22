@@ -14,7 +14,6 @@ function init () {
 }
 
 function build () {
-    cd "$SOURCE"
     brunch $DEVICE | tee "$LOG"
     return ${PIPESTATUS[0]}
 }
