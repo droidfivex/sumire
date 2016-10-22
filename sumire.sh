@@ -8,10 +8,10 @@
 ### https://github.com/droidfivex/sumire/blob/master/LICENSE
 
 # set paths
-readonly RUN=${0##*/}
+RUN=${0##*/}
 tmp=$(readlink -f $0)
-readonly SUMIRE=${tmp%/*}
-readonly WORK=$(pwd)
+SUMIRE=${tmp%/*}
+WORK=$(pwd)
 unset tmp
 
 # initialize
@@ -19,7 +19,7 @@ source "${SUMIRE}/variables.sh"
 source "${SUMIRE}/functions.sh"
 
 # parse mode
-readonly MODE=$1
+MODE=$1
 shift 1
 case $MODE in
     build)
