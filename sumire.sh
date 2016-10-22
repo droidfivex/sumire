@@ -37,8 +37,23 @@ case $MODE in
         [ -d $SOURCE ] || error "source directory does not exist."
 
         # kick-start build
-        init || error "device tree is unprepared."
-        build ;;
+        cd "$SOURCE" >& /dev/null
+        source build/envsetup.sh >& /dev/null
+        breakfast $DEVICE >& /dev/null #|| error "device tree is unprepared."
+        MODEL=$(get_build_var PRODUCT_MODEL)
+        VARIANT=$(get_build_var TARGET_BUILD_VARIANT)
+        LOGDIR=$(readlink -f "$WORK/log")
+        mkdir -p "$LOGDIR/logging"
+        mkdir -p "$LOGDIR/failed"
+        mkdir -p "$LOGDIR/successful"
+        LOGNAME="$SOURCE_$DEVICE-$VARIANT_$(date '+%Y%m%d%-H%M%S')"
+        LOGFILE="$LOGDIR/logging/$LOGNAME.log"
+        LANG=C
+        brunch $DEVICE 2>&1 | tee "$LOGFILE"
+        echo $LOGFILE
+        RESULT=${PIPESTATUS[0]}
+        mv $LOGFILE $(echo $LOGFILE | sed s/logging/$(test $RESULT -eq 0 && echo "successful" || echo "failed")/g)
+        exit $RESULT ;;
     setup) setup ;;
     update) update ;;
     help) usage $1 ;;

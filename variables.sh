@@ -12,3 +12,9 @@ unset DEVICE
 unset SOURCE
 unset JOBS
 unset MODE
+unset MODEL
+unset VARIANT
+unset RESULT
+unset LOGDIR
+unset LOGNAME
+unset LOGFILE

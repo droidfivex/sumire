@@ -7,17 +7,6 @@
 ### Licensed under the MIT License.
 ### https://github.com/droidfivex/sumire/blob/master/LICENSE
 
-function init () {
-    cd "$SOURCE" >& /dev/null
-    source build/envsetup.sh >& /dev/null
-    breakfast $DEVICE >& /dev/null
-}
-
-function build () {
-    brunch $DEVICE | tee "$LOG"
-    return ${PIPESTATUS[0]}
-}
-
 function update () {
     getrev
     local before=$REVISION
