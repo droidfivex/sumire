@@ -10,6 +10,5 @@
 # RESET
 unset DEVICE
 unset SOURCE
-unset LINE
 unset JOBS
 unset MODE

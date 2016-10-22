@@ -39,7 +39,8 @@ case $MODE in
         # kick-start build
         init || error "device tree is unprepared."
         build ;;
+    setup) setup ;;
     update) update ;;
     help) usage $1 ;;
-    *) error "You must select right mode.\n    You want help, run '$RUN help'." ;;
+    *) error "You must select right mode.\nYou want help, run '$RUN help'." ;;
 esac

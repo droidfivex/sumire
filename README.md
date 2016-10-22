@@ -7,7 +7,10 @@ What is sumire?
 
 Setup
 ----------
-*add later*
+```
+https://github.com/droidfivex/sumire ~/sumire
+~/sumire/sumire.sh setup
+```
 
 Update
 ----------

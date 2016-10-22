@@ -11,17 +11,12 @@ function init () {
     cd "$SOURCE" >& /dev/null
     source build/envsetup.sh >& /dev/null
     breakfast $DEVICE >& /dev/null
-    local result=$?
-    cd "$WORK"
-    [ $result -ne 0 ] && return 1
 }
 
 function build () {
     cd "$SOURCE"
     brunch $DEVICE | tee "$LOG"
-    local result=${PIPESTATUS[0]}
-    cd "$WORK"
-    return $result
+    return ${PIPESTATUS[0]}
 }
 
 function update () {
@@ -35,9 +30,18 @@ function update () {
     [ $before = $REVISION ] && color blue "try update, but no commits found after ${before:0:7}." || color blue "updated ${before:0:7} to ${REVISION:0:7}."
 }
 
+function setup () {
+    cd $HOME
+    mkdir -p $HOME/bin
+    grep 'export PATH="$HOME/bin:\$PATH"' ~/.bashrc >& /dev/null
+    [ $? -ne 0 ] && echo -e '\nif [ -d $HOME/bin ]; then\n\texport PATH="$HOME/bin:$PATH"\nfi' >> ~/.bashrc
+    ln -s $SUMIRE/sumire.sh $HOME/bin/sumire 2>/dev/null
+    color blue "please run 'source ~/.bashrc'."
+}
+
 function error () {
     cd "$WORK"
-    color red "*E: ${1}" 1>&2
+    color red "${1}" 1>&2
     exit 1
 }
 
@@ -63,6 +67,9 @@ function usage () {
         update)
             color blue "Usage: $RUN update"
             echo -e "update own. has no argument." ;;
+        setup)
+            color blue "Usage: $RUN setup"
+            echo -e "setup own. has no argument." ;;
         help)
             color blue "Usage: $RUN help \e[3mMODE\e[m"
             echo -e "show help of given MODE, show generic help if no given or MODE not found." ;;
@@ -77,6 +84,7 @@ function usage () {
             echo -e "\tbuild: run build."
             echo -e "\thelp: show help."
             echo -e "\tupdate: update own."
+            echo -e "\tsetup: setup own."
             echo -e "more information, please run '$RUN help MODE'." ;;
     esac
 }
