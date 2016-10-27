@@ -15,8 +15,8 @@ WORK=$(pwd)
 unset tmp
 
 # initialize
-source "${SUMIRE}/variables.sh"
-source "${SUMIRE}/functions.sh"
+source "${SUMIRE}/variable.sh"
+source "${SUMIRE}/function.sh"
 
 # parse mode
 MODE=$1
@@ -26,8 +26,10 @@ case $MODE in
         # parse arguments
         while getopts :d:s: argument; do
         case $argument in
-            d) readonly DEVICE=$OPTARG ;;
-            s) readonly SOURCE=$OPTARG ;;
+            d) DEVICE=$OPTARG ;;
+            s) SOURCE=$OPTARG ;;
+            r) SYNC=ON ;;
+            j) JOBS=$OPTARG ;;
             :) continue ;;
             \?) continue ;;
         esac; done
